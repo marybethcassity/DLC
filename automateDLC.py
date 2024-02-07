@@ -22,7 +22,7 @@ def extract_outliers(config_path, video_paths):
     deeplabcut.extract_outlier_frames(config_path, video_paths, outlieralgorithm='jump', automatic = True)
 
 def full_pipeline(config_path, video_paths):
-    #train_network(config_path)
+    train_network(config_path)
     evaluate_network(config_path)
     analyze_videos(config_path, video_paths)
     plot_trajectories(config_path, video_paths)
