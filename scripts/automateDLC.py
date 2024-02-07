@@ -2,7 +2,6 @@ import deeplabcut
 import argparse
 from config import *
 
-
 def train_network(config_path):
     deeplabcut.train_network(config_path, displayiters=1000, saveiters=20000, maxiters=100000)
 
@@ -41,7 +40,6 @@ def main():
         evaluate_network(config_path)
     elif args.function in ['analyze_videos', 'plot_trajectories', 'create_labeled_video', 'extract_outliers', 'full_pipeline']:
         globals()[args.function](config_path, video_paths)
-
 
 if __name__ == "__main__":
     main()
