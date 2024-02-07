@@ -10,16 +10,20 @@ def evaluate_network(config_path):
 def analyze_videos(config_path, video_path):
     deeplabcut.analyze_videos(config_path, [video_path], save_as_csv=True)
 
+def plot_trajectories(config_path, video_path):
+    deeplabcut.plot_trajectories(config_path, [video_path])    
+
 def create_labeled_video(config_path, video_path):
     deeplabcut.create_labeled_video(config_path, [video_path])
 
 def extract_outliers(config_path, video_path):
-    deeplabcut.extract_outlier_frames(config_path, [video_path], outlieralgorithm='uncertain')
+    deeplabcut.extract_outlier_frames(config_path, [video_path], outlieralgorithm='jump')
 
 def full_pipeline(config_path, video_path):
     train_network(config_path)
     evaluate_network(config_path)
     analyze_videos(config_path, video_path)
+    plot_trajectories(config_path, video_path)
     create_labeled_video(config_path, video_path)
     extract_outliers(config_path, video_path)
 
@@ -35,7 +39,7 @@ def main():
         train_network(args.config_path)
     elif args.function == 'evaluate_network':
         evaluate_network(args.config_path)
-    elif args.function in ['analyze_videos', 'create_labeled_video', 'extract_outliers']:
+    elif args.function in ['analyze_videos', 'plot_trajectories', 'create_labeled_video', 'extract_outliers']:
         if args.video_path == '':
             raise ValueError("video_path is required for {}".format(args.function))
         globals()[args.function](args.config_path, args.video_path)
