@@ -1,8 +1,9 @@
 import deeplabcut
 import argparse
-from config import *
+from DLC.config import *
 import time 
 import csv
+from DLC.utils.extrafun import read_config 
 
 def format_duration(seconds):
     hours = int(seconds // 3600)
@@ -11,7 +12,7 @@ def format_duration(seconds):
     return f"{hours:02d}:{minutes:02d}:{seconds:.2f}"
 
 def train_network(config_path):
-    deeplabcut.train_network(config_path, displayiters=1000, saveiters=20000, maxiters=100000)
+    deeplabcut.train_network(config_path, displayiters=1000, saveiters=20000, maxiters=max_iters)
 
 def evaluate_network(config_path):
     deeplabcut.evaluate_network(config_path, plotting=True)
@@ -63,12 +64,14 @@ def full_pipeline(config_path, video_paths, csv_path):
     "Create Labeled Video": {"duration_seconds": time_create, "formatted": format_duration(time_create)},
     "Extract Outliers": {"duration_seconds": time_extract, "formatted": format_duration(time_extract)}
 }
+    cfg = read_config(config_path)
+    iteration = "iteration-" + str(cfg["iteration"])
 
     with open(csv_path, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Task', 'Duration (seconds)', 'Duration (hh:mm:ss)'])
+        writer.writerow(['Iteration', 'Maximum Iterations', 'Task', 'Duration (seconds)', 'Duration (hh:mm:ss)'])
         for task, times in tasks_and_times.items():
-            writer.writerow([task, times['duration_seconds'], times['formatted']])
+            writer.writerow([iteration, max_iters, task, times['duration_seconds'], times['formatted']])
  
 def main():
     parser = argparse.ArgumentParser(description="DeepLabCut helper script.")
