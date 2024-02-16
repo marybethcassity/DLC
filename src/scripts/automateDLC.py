@@ -56,13 +56,16 @@ def full_pipeline(config_path, video_paths, csv_path):
     time_create = toc_create - tic_create
     time_extract = toc_extract - tic_extract
 
+    total_time = time_train + time_eval + time_analyze + time_plot + time_create + time_extract 
+
     tasks_and_times = {
     "Train Network": {"duration_seconds": time_train, "formatted": format_duration(time_train)},
     "Evaluate Network": {"duration_seconds": time_eval, "formatted": format_duration(time_eval)},
     "Analyze Videos": {"duration_seconds": time_analyze, "formatted": format_duration(time_analyze)},
     "Plot Trajectories": {"duration_seconds": time_plot, "formatted": format_duration(time_plot)},
     "Create Labeled Video": {"duration_seconds": time_create, "formatted": format_duration(time_create)},
-    "Extract Outliers": {"duration_seconds": time_extract, "formatted": format_duration(time_extract)}
+    "Extract Outliers": {"duration_seconds": time_extract, "formatted": format_duration(time_extract)},
+    "Total": {"duration_seconds": total_time, "formatted": format_duration(total_time)},
 }
     cfg = read_config(config_path)
     iteration = "iteration-" + str(cfg["iteration"])
