@@ -1,9 +1,9 @@
 import deeplabcut
 import argparse
-from DLC.config import *
+from config import *
 import time 
 import csv
-from DLC.utils.extrafun import read_config 
+from utils.extrafun import read_config 
 
 def format_duration(seconds):
     hours = int(seconds // 3600)
