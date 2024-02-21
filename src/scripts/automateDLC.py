@@ -3,7 +3,7 @@ import argparse
 from config import *
 import time 
 import csv
-from utils.extrafun import read_config 
+from src.utils.extrafun import read_config 
 
 def format_duration(seconds):
     hours = int(seconds // 3600)
@@ -70,9 +70,9 @@ def full_pipeline(config_path, video_paths, csv_path):
     cfg = read_config(config_path)
     iteration = "iteration-" + str(cfg["iteration"])
 
-    with open(csv_path, mode='w', newline='') as file:
+    with open(csv_path, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Iteration', 'Maximum Iterations', 'Task', 'Duration (seconds)', 'Duration (hh:mm:ss)'])
+        #writer.writerow(['Iteration', 'Maximum Iterations', 'Task', 'Duration (seconds)', 'Duration (hh:mm:ss)'])
         for task, times in tasks_and_times.items():
             writer.writerow([iteration, max_iters, task, times['duration_seconds'], times['formatted']])
  
